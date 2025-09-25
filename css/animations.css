@@ -1,0 +1,258 @@
+  /* Keyframe Animations */
+
+  @keyframes float {
+      0%,
+      100% {
+          transform: translateY(0);
+      }
+      50% {
+          transform: translateY(-20px);
+      }
+  }
+
+  @keyframes pulse {
+      0%,
+      100% {
+          transform: scale(1);
+          opacity: 1;
+      }
+      50% {
+          transform: scale(1.05);
+          opacity: 0.8;
+      }
+  }
+
+  @keyframes glow {
+      0%,
+      100% {
+          box-shadow: 0 0 20px rgba(108, 99, 255, 0.5);
+      }
+      50% {
+          box-shadow: 0 0 40px rgba(108, 99, 255, 0.8);
+      }
+  }
+
+  @keyframes rotate {
+      0% {
+          transform: rotate(0deg);
+      }
+      100% {
+          transform: rotate(360deg);
+      }
+  }
+
+  @keyframes slideInFromLeft {
+      0% {
+          opacity: 0;
+          transform: translateX(-50px);
+      }
+      100% {
+          opacity: 1;
+          transform: translateX(0);
+      }
+  }
+
+  @keyframes slideInFromRight {
+      0% {
+          opacity: 0;
+          transform: translateX(50px);
+      }
+      100% {
+          opacity: 1;
+          transform: translateX(0);
+      }
+  }
+
+  @keyframes slideInFromBottom {
+      0% {
+          opacity: 0;
+          transform: translateY(50px);
+      }
+      100% {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  @keyframes fadeIn {
+      0% {
+          opacity: 0;
+      }
+      100% {
+          opacity: 1;
+      }
+  }
+  /* Element Animations */
+
+  .hero-title {
+      animation: slideInFromLeft 1s ease-out;
+  }
+
+  .hero-subtitle {
+      animation: slideInFromLeft 1s ease-out 0.2s both;
+  }
+
+  .hero-description {
+      animation: slideInFromLeft 1s ease-out 0.4s both;
+  }
+
+  .hero-buttons {
+      animation: slideInFromLeft 1s ease-out 0.6s both;
+  }
+
+  .hero-visual {
+      animation: slideInFromRight 1s ease-out 0.8s both;
+  }
+
+  .feature-card {
+      animation: slideInFromBottom 0.8s ease-out both;
+  }
+
+  .feature-card:nth-child(1) {
+      animation-delay: 0.1s;
+  }
+
+  .feature-card:nth-child(2) {
+      animation-delay: 0.2s;
+  }
+
+  .feature-card:nth-child(3) {
+      animation-delay: 0.3s;
+  }
+
+  .feature-card:nth-child(4) {
+      animation-delay: 0.4s;
+  }
+
+  .chain {
+      animation: float 6s ease-in-out infinite;
+  }
+
+  .chain-1 {
+      animation-delay: 0s;
+  }
+
+  .chain-2 {
+      animation-delay: 1.5s;
+  }
+
+  .chain-3 {
+      animation-delay: 3s;
+  }
+
+  .chain-4 {
+      animation-delay: 4.5s;
+  }
+
+  .nexus-center {
+      animation: pulse 2s ease-in-out infinite, glow 3s ease-in-out infinite;
+  }
+
+  .token {
+      animation: float 4s ease-in-out infinite;
+  }
+
+  .token-1 {
+      animation-delay: 0s;
+  }
+
+  .token-2 {
+      animation-delay: 1.3s;
+  }
+
+  .token-3 {
+      animation-delay: 2.6s;
+  }
+
+  .node {
+      animation: pulse 3s ease-in-out infinite;
+  }
+
+  .node-1 {
+      animation-delay: 0s;
+  }
+
+  .node-2 {
+      animation-delay: 0.5s;
+  }
+
+  .node-3 {
+      animation-delay: 1s;
+  }
+
+  .node-4 {
+      animation-delay: 1.5s;
+  }
+
+  .central-node {
+      animation: pulse 2s ease-in-out infinite, glow 3s ease-in-out infinite;
+  }
+
+  .connection {
+      animation: glow 4s ease-in-out infinite;
+  }
+
+  .connection-1 {
+      animation-delay: 0s;
+  }
+
+  .connection-2 {
+      animation-delay: 1s;
+  }
+
+  .connection-3 {
+      animation-delay: 2s;
+  }
+
+  .connection-4 {
+      animation-delay: 3s;
+  }
+  /* Scroll Animations */
+
+  .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+  }
+
+  .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+  }
+  /* Hover Effects */
+
+  .feature-card:hover .feature-icon {
+      animation: pulse 0.5s ease;
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+      animation: pulse 0.3s ease;
+  }
+  /* Progress Bar Animation */
+
+  .progress-fill {
+      transition: width 1s ease-in-out;
+  }
+  /* Task Completion Animation */
+
+  .task-item input:checked+label {
+      color: var(--primary-color);
+      text-decoration: line-through;
+  }
+
+  .task-item input:checked+label::after {
+      content: ' ✓';
+      color: var(--accent-color);
+      font-weight: bold;
+  }
+  /* Wallet Connection Animation */
+
+  .wallet-info {
+      animation: fadeIn 0.5s ease;
+  }
+  /* Airdrop Claim Animation */
+
+  #claimAirdrop:enabled {
+      animation: pulse 1s infinite;
+  }
