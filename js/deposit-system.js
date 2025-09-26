@@ -256,39 +256,34 @@ class DepositSystem {
         this.saveUserData();
     }
 
-    // التصحيح الصحيح:
     updateUI() {
         this.updateAvailableBalance();
 
-        // Update deposited amount
-        document.getElementById('totalDeposited').textContent =
-            '$ { this.totalDeposited.toFixed(2) } MONAD ';
+        // Update deposited amount - استخدم backticks ``
+        const depositedElement = document.getElementById('totalDeposited');
+        if (depositedElement) {
+            depositedElement.textContent = '$ { this.totalDeposited.toFixed(2) }MONAD';
+        }
 
-        // Update earnings
-        document.getElementById('totalEarnings').textContent =
-            '$ { this.totalEarnings.toFixed(4) } MONAD ';
+        const earningsElement = document.getElementById('totalEarnings');
+        if (earningsElement) {
+            earningsElement.textContent = '$ { this.totalEarnings.toFixed(4) }MONAD';
+        }
+      }
+        updateDepositList() {
+            const list = document.getElementById('depositList');
 
-        // Enable/disable claim button
-        document.getElementById('claimEarnings').disabled = this.totalEarnings <= 0;
-
-        // Update deposit list
-        this.updateDepositList();
-    }
-
-    updateDepositList() {
-        const list = document.getElementById('depositList');
-
-        if (this.userDeposits.length === 0) {
-            list.innerHTML = `
+            if (this.userDeposits.length === 0) {
+                list.innerHTML = `
                 <div class="empty-state">
                     <p>No deposits yet</p>
                     <small>Deposit MONAD to start earning rewards</small>
                 </div>
             `;
-            return;
-        }
+                return;
+            }
 
-        list.innerHTML = this.userDeposits.map((deposit, index) => `
+            list.innerHTML = this.userDeposits.map((deposit, index) => `
             <div class="deposit-item">
                 <div class="deposit-header">
                     <span>Deposit #${index + 1}</span>
@@ -300,53 +295,53 @@ class DepositSystem {
                 </div>
             </div>
         `).join('');
-    }
+        }
 
-    // Storage methods
-    saveUserData() {
-        const data = {
-            deposits: this.userDeposits,
-            totalDeposited: this.totalDeposited,
-            totalEarnings: this.totalEarnings,
-            claimedAmount: this.claimedAmount,
-            lastUpdate: Date.now()
-        };
-        localStorage.setItem('monadDepositData', JSON.stringify(data));
-    }
+        // Storage methods
+        saveUserData() {
+            const data = {
+                deposits: this.userDeposits,
+                totalDeposited: this.totalDeposited,
+                totalEarnings: this.totalEarnings,
+                claimedAmount: this.claimedAmount,
+                lastUpdate: Date.now()
+            };
+            localStorage.setItem('monadDepositData', JSON.stringify(data));
+        }
 
-    loadUserData() {
-        const saved = localStorage.getItem('monadDepositData');
-        if (saved) {
-            try {
-                const data = JSON.parse(saved);
-                this.userDeposits = data.deposits || [];
-                this.totalDeposited = data.totalDeposited || 0;
-                this.totalEarnings = data.totalEarnings || 0;
-                this.claimedAmount = data.claimedAmount || 0;
-            } catch (error) {
-                console.error('Error loading deposit data:', error);
+        loadUserData() {
+            const saved = localStorage.getItem('monadDepositData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    this.userDeposits = data.deposits || [];
+                    this.totalDeposited = data.totalDeposited || 0;
+                    this.totalEarnings = data.totalEarnings || 0;
+                    this.claimedAmount = data.claimedAmount || 0;
+                } catch (error) {
+                    console.error('Error loading deposit data:', error);
+                }
+            }
+        }
+
+        // Notification system
+        showNotification(message, type) {
+            if (typeof walletManager !== 'undefined') {
+                walletManager.showNotification(message, type);
+            } else {
+                console.log(`${type}: ${message}`);
             }
         }
     }
 
-    // Notification system
-    showNotification(message, type) {
-        if (typeof walletManager !== 'undefined') {
-            walletManager.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-        }
+    // Initialize Deposit System
+    const depositSystem = new DepositSystem();
+
+    // Auto-update balance when wallet connects
+    if (typeof walletManager !== 'undefined') {
+        const originalUpdateUI = walletManager.updateWalletUI;
+        walletManager.updateWalletUI = function() {
+            originalUpdateUI.call(this);
+            depositSystem.updateAvailableBalance();
+        };
     }
-}
-
-// Initialize Deposit System
-const depositSystem = new DepositSystem();
-
-// Auto-update balance when wallet connects
-if (typeof walletManager !== 'undefined') {
-    const originalUpdateUI = walletManager.updateWalletUI;
-    walletManager.updateWalletUI = function() {
-        originalUpdateUI.call(this);
-        depositSystem.updateAvailableBalance();
-    };
-}
