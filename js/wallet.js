@@ -4,7 +4,7 @@ class WalletManager {
         this.walletAddress = null;
         this.walletBalance = 0;
         this.isConnected = false;
-        this.monadChainId = '0x1f4';
+        this.monadChainId = ''0x279f';
         this.provider = null;
         this.accounts = [];
         this.currentAccountIndex = 0;
