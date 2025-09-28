@@ -2,10 +2,10 @@
 class AirdropSystem {
     constructor() {
         this.tasks = [
-            { id: 'task1', completed: false, reward: 50 },
-            { id: 'task2', completed: false, reward: 100 },
-            { id: 'task3', completed: false, reward: 150 },
-            { id: 'task4', completed: false, reward: 200 }
+            { id: 'task1', completed: false, reward: 0.1 },
+            { id: 'task2', completed: false, reward: 0.5 },
+            { id: 'task3', completed: false, reward: 1 },
+            { id: 'task4', completed: false, reward: 3 }
         ];
         this.totalReward = 0;
         this.claimed = false;
@@ -127,7 +127,6 @@ class AirdropSystem {
 
     setupTwitterTask() {
         // Mock Twitter follow implementation
-        // In a real application, this would use Twitter API
         const twitterTask = this.tasks.find(task => task.id === 'task2');
         const twitterCheckbox = document.getElementById('task2');
 
@@ -140,7 +139,7 @@ class AirdropSystem {
             // Add custom follow button
             const taskItem = twitterCheckbox.parentElement;
             const followButton = document.createElement('button');
-            followButton.textContent = 'Follow on Twitter';
+            followButton.textContent = 'Visit Twitter';
             followButton.className = 'task-action-btn';
             followButton.style.marginLeft = '10px';
             followButton.style.padding = '5px 10px';
@@ -160,7 +159,7 @@ class AirdropSystem {
                     twitterTask.completed = true;
                     this.saveProgress();
                     this.updateAirdropProgress();
-                    this.showNotification('Twitter follow task completed!', 'success');
+                    this.showNotification('Twitter visit task completed!', 'success');
                 }, 2000);
             });
 
@@ -180,7 +179,7 @@ class AirdropSystem {
 
             const taskItem = discordCheckbox.parentElement;
             const joinButton = document.createElement('button');
-            joinButton.textContent = 'Join Discord';
+            joinButton.textContent = 'Visit Discord';
             joinButton.className = 'task-action-btn';
             joinButton.style.marginLeft = '10px';
             joinButton.style.padding = '5px 10px';
@@ -199,63 +198,11 @@ class AirdropSystem {
                     discordTask.completed = true;
                     this.saveProgress();
                     this.updateAirdropProgress();
-                    this.showNotification('Discord join task completed!', 'success');
+                    this.showNotification('Discord visit task completed!', 'success');
                 }, 2000);
             });
 
             taskItem.appendChild(joinButton);
-        }
-    }
-
-    setupReferralTask() {
-        // Mock referral implementation
-        const referralTask = this.tasks.find(task => task.id === 'task4');
-        const referralCheckbox = document.getElementById('task4');
-
-        if (referralCheckbox) {
-            if (referralTask.completed) {
-                referralCheckbox.checked = true;
-            }
-
-            const taskItem = referralCheckbox.parentElement;
-            const referralSection = document.createElement('div');
-            referralSection.style.marginTop = '10px';
-            referralSection.innerHTML = `
-              <div style="display: flex; gap: 10px; align-items: center;">
-                  <input type="text" id="referralInput" placeholder="Enter friend's wallet address"
-                         style="padding: 5px; border: 1px solid var(--gray-color); border-radius: 4px; background: transparent; color: white;">
-                  <button id="addReferral" style="padding: 5px 10px; background: var(--accent-color); color: white; border: none; border-radius: 4px; cursor: pointer;">
-                      Add Referral
-                  </button>
-              </div>
-              <div id="referralList" style="margin-top: 10px; font-size: 0.9rem;"></div>
-          `;
-
-            taskItem.appendChild(referralSection);
-
-            let referralCount = 0;
-            const referralList = document.getElementById('referralList');
-            const addButton = document.getElementById('addReferral');
-            const referralInput = document.getElementById('referralInput');
-
-            addButton.addEventListener('click', () => {
-                const address = referralInput.value.trim();
-                if (address && address.length === 42 && address.startsWith('0x')) {
-                    referralCount++;
-                    referralList.innerHTML += `<div>Referral ${referralCount}: ${address.substring(0, 10)}...${address.substring(38)}</div>`;
-                    referralInput.value = '';
-
-                    if (referralCount >= 3) {
-                        referralCheckbox.checked = true;
-                        referralTask.completed = true;
-                        this.saveProgress();
-                        this.updateAirdropProgress();
-                        this.showNotification('Referral task completed!', 'success');
-                    }
-                } else {
-                    this.showNotification('Please enter a valid wallet address', 'error');
-                }
-            });
         }
     }
 
