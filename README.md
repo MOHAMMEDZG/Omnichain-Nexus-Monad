@@ -4,7 +4,7 @@ A revolutionary blockchain interoperability platform built with Monad Testnet in
 
 ## 🚀 Live Demo
 
-👉 [https://omnichain-nexus.netlify.app](https://omnichain-nexus.netlify.app)
+👉 [https://boisterous-bombolone-a102e8.netlify.app/]
 
 ## ✨ Features
 
